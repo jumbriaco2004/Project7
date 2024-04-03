@@ -24,7 +24,6 @@ class SpaceJam(ShowBase):
         self.score = 0
         self.scoreText = OnscreenText(text="Score: 0", pos=(-1.3, 0.9), scale=0.07, fg=(1, 1, 1, 1), align=TextNode.ALeft)
 
-
         self.Universe = spaceJamClasses.Universe(self.loader, "./Assets/Universe/Universe.obj", self.render, "Universe", "./Assets/Universe/starfield-in-blue.jpg", (0, 0, 0), 10000)
         self.Planet1 = spaceJamClasses.Planet(self.loader, "./Assets/Planets/protoPlanet.x", self.render, "Planet1", "Assets/Planets/planet1.jpg", (150, 5000, 67), 350)
         self.Planet2 = spaceJamClasses.Planet(self.loader, "./Assets/Planets/protoPlanet.x", self.render, "Planet2", "Assets/Planets/planet2.jpg", (5000, 5000, 100), 350)
@@ -46,22 +45,14 @@ class SpaceJam(ShowBase):
         self.cTrav.addCollider(self.Player.collisionNode, self.pusher)
         self.cTrav.showCollisions(self.render)
 
-        #Setting Drones
-        spaceJamClasses.Drone.droneCount += 1
-        droneName = "Drone" + str(spaceJamClasses.Drone.droneCount)
-        centralObject = self.SpaceStation1.modelNode.getPos()
-
-        self.DrawCloudDefense(centralObject, droneName)
-        self.DrawBaseballSeams(centralObject, droneName, 2, 60)
-        self.DrawCircleXYDefense(centralObject, droneName, radius = 300, numDrones = 30)
-        self.DrawCircleXZDefense(centralObject, droneName, radius = 300, numDrones = 30)
-        self.DrawCircleYZDefense(centralObject, droneName, radius = 300, numDrones = 30)
-
-
-
-    def DrawCloudDefense(self, centralObject, droneName):
         fullCycle = 60
         for j in range(fullCycle):
+            spaceJamClasses.Drone.droneCount += 1
+            droneName = "Drone" + str(spaceJamClasses.Drone.droneCount)
+            centralObject = self.SpaceStation1.modelNode.getPos()
+            self.DrawCloudDefense(centralObject, droneName)
+
+    def DrawCloudDefense(self, centralObject, droneName):
             unitVec = defensePaths.Cloud()
             unitVec.normalize()
             position = unitVec * 1000 + centralObject

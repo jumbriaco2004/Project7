@@ -10,6 +10,7 @@ from direct.task.Task import TaskManager
 import DefensePaths as defensePaths
 #Regex module import for string editing
 import re
+from panda3d.core import NodePath
 
 class Universe(InverseSphereCollideObject):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
@@ -85,6 +86,7 @@ class Player(SphereCollideObject):
         
         pattern = r'[0-9]'
         strippedString = re.sub(pattern, '', victim)
+        print(strippedString)
 
         if (strippedString == "Drone"):
             print(shooter + ' is DONE.')
@@ -100,7 +102,6 @@ class Player(SphereCollideObject):
 
         self.explodeNode.setPos(hitPosition)
         self.Explode(hitPosition)
-        self.droneHitScore()
 
     def Explode(self, impactPoint):
         self.cntExplode += 1
@@ -272,6 +273,7 @@ class Player(SphereCollideObject):
 
 class Drone(SphereCollideObject):
     droneCount = 0
+    
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
         super(Drone, self).__init__(loader, modelPath, parentNode, nodeName, Vec3(0, 0, 0), 3)
         self.modelNode.setPos(posVec)
